@@ -1,0 +1,24 @@
+extends: default
+
+rules:
+  # Allow GitHub Actions keyword `on:` without warnings
+  truthy:
+    allowed-values: ["on"]
+    ignore: |
+      .github/workflows/*
+
+  indentation:
+    spaces: 2
+    indent-sequences: consistent
+    check-multi-line-strings: false
+
+  # Disable document start rule
+  document-start: disable
+
+  # Relax long line enforcement
+  line-length:
+    max: 120
+    allow-non-breakable-words: true
+
+  # Disable end-of-file newline rule (supported syntax)
+  new-line-at-end-of-file: disable
