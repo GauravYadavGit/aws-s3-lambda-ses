@@ -30,8 +30,8 @@ resource "aws_iam_policy" "lambda_policy" {
         Resource = "*"
       },
       {
-        Effect = "Allow",
-        Action = ["s3:GetObject"],
+        Effect   = "Allow",
+        Action   = ["s3:GetObject"],
         Resource = "arn:aws:s3:::${var.bucket_name}/*"
       }
     ]
