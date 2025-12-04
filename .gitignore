@@ -19,3 +19,7 @@ lambda.zip
 
 # AWS credentials (NEVER COMMIT)
 .aws/
+
+terraform.tfvars
+*.tfvars
+# Local environment files
