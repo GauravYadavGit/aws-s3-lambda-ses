@@ -9,14 +9,8 @@ on:
 
 jobs:
   terraform:
-    name: Terraform Validation & Plan
+    name: Terraform Format & Validate
     runs-on: ubuntu-latest
-
-    # 🔥 Dummy AWS credentials so terraform plan works without real AWS access
-    env:
-      AWS_ACCESS_KEY_ID: dummy
-      AWS_SECRET_ACCESS_KEY: dummy
-      AWS_REGION: ap-south-1
 
     defaults:
       run:
@@ -34,37 +28,8 @@ jobs:
       - name: Terraform Format Check
         run: terraform fmt -check -recursive
 
-      - name: Terraform Init
-        run: terraform init -input=false
+      - name: Terraform Init (without AWS backend)
+        run: terraform init -backend=false
 
       - name: Terraform Validate
         run: terraform validate
-
-      - name: Terraform Plan (create binary + readable output)
-        id: plan
-        run: |
-          terraform plan -no-color -out=tfplan.binary
-          terraform show -no-color tfplan.binary > plan.txt
-
-      - name: Save plan output to GitHub output
-        id: setplan
-        run: |
-          echo "plan<<EOF" >> $GITHUB_OUTPUT
-          sed -n '1,5000p' plan.txt >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
-
-      - name: Add plan as a PR comment
-        uses: marocchino/sticky-pull-request-comment@v2
-        with:
-          recreate: true
-          message: |
-            ## Terraform Plan Output
-            ```
-            ${{ steps.setplan.outputs.plan }}
-            ```
-
-      - name: Upload plan artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: terraform-plan
-          path: plan.txt
