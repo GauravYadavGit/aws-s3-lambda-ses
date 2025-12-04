@@ -12,6 +12,12 @@ jobs:
     name: Terraform Validation & Plan
     runs-on: ubuntu-latest
 
+    # 🔥 Dummy AWS credentials so terraform plan works without real AWS access
+    env:
+      AWS_ACCESS_KEY_ID: dummy
+      AWS_SECRET_ACCESS_KEY: dummy
+      AWS_REGION: ap-south-1
+
     defaults:
       run:
         working-directory: ./terraform
