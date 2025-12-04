@@ -4,12 +4,6 @@ variable "aws_region" {
   description = "AWS region to deploy resources"
 }
 
-variable "aws_profile" {
-  type        = string
-  default     = "gaurav"
-  description = "AWS CLI profile name"
-}
-
 variable "bucket_name" {
   type        = string
   description = "S3 bucket name to store uploaded files"
