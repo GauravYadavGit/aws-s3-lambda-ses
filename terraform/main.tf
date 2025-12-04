@@ -11,7 +11,6 @@ resource "aws_s3_bucket" "upload_bucket" {
   }
 }
 
-
 # 2. Package Lambda Function as ZIP
 
 data "archive_file" "lambda_zip" {
